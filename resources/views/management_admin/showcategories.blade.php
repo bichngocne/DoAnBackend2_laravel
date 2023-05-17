@@ -2,10 +2,10 @@
 @section('admin_content')
 <h6 class="font-weight-bolder mb-0">Category Product</h6>
 <div class="searcha">
-    <form action="" method="POST">
+    <form action="{{route('seekcategory')}}" method="GET">
         <div class="input-group">
             <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-            <input type="text" class="form-control" placeholder="Type category name here...">
+            <input type="text" class="form-control" name="seek" placeholder="Type category name here...">
             <button type="submit" class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank">Search</button>
         </div>
         @csrf

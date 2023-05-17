@@ -28,3 +28,5 @@ Route::post('edit-categories/{id}',[CategoryProductController::class,'EditCatego
 Route::get('editScreen-categories/{id}',[CategoryProductController::class,'EditScreenCategroies'])->name("editscreencategories");
 //remove Categories
 Route::get('remove-categories/{id}',[CategoryProductController::class,'RemoveCategories'])->name("removecategories");
+//seek Categories  
+Route::get('seek-category',[CategoryProductController::class,'SeekCategory'])->name("seekcategory");

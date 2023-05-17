@@ -53,10 +53,18 @@ class CategoryProductController extends Controller
         return redirect()->route('listcategories');
     }
 
-    
+
     function removecategories($id){
         DB::table("loaisanpham")->where("id",$id)->delete();
         return redirect()->route('listcategories');
+    }
+
+
+    function SeekCategory(Request $request){
+        $data=$request->get('seek');
+        $listLsp=DB::table('loaisanpham')->where('tenloaisanpham','LIKE','%'.$data.'%')
+        ->paginate(5); 
+        return view("management_admin.showcategories",compact("listLsp"));
     }
     public function index()
     {
