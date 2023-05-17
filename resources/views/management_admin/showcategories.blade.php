@@ -5,7 +5,7 @@
     <form action="" method="POST">
         <div class="input-group">
             <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-            <input type="text" class="form-control" placeholder="Type here...">
+            <input type="text" class="form-control" placeholder="Type category name here...">
             <button type="submit" class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank">Search</button>
         </div>
         @csrf
@@ -31,7 +31,7 @@
             </td>
             <td style="text-align: center;">
                 <a href="{{route('editscreencategories', ['id'=>$item->id])}}" type="button" class="btn btn-info">Edit</a>
-                <a onclick="return confirm('Are you sure you want delete?')" href="" type="button" class="btn btn-danger">Delete</a>
+                <a onclick="return confirm('Are you sure you want delete?')" href="{{route('removecategories', ['id'=>$item->id])}}" type="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         @endforeach

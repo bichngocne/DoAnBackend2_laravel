@@ -26,3 +26,5 @@ Route::get('addScreen-categories',[CategoryProductController::class,'AddScreenCa
 Route::post('edit-categories/{id}',[CategoryProductController::class,'EditCategories'])->name("editcategories");
 //editScreen Categories
 Route::get('editScreen-categories/{id}',[CategoryProductController::class,'EditScreenCategroies'])->name("editscreencategories");
+//remove Categories
+Route::get('remove-categories/{id}',[CategoryProductController::class,'RemoveCategories'])->name("removecategories");

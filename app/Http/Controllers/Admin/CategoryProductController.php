@@ -14,7 +14,7 @@ class CategoryProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     
+
     function ListCategroies(){
         $listLsp=DB::table("loaisanpham")->paginate(5);
         return view("management_admin.showcategories",compact("listLsp"));
@@ -43,10 +43,19 @@ class CategoryProductController extends Controller
 
 
     function EditCategories($id,Request $request){
+        $request->validate([
+            'category_name'=>'required',
+        ]);
         $data=$request->all();
         $lsp=LoaiSanPham::find($id);
         $lsp->tenLoaiSanPham=$data['category_name'];
         $lsp->save();
+        return redirect()->route('listcategories');
+    }
+
+    
+    function removecategories($id){
+        DB::table("loaisanpham")->where("id",$id)->delete();
         return redirect()->route('listcategories');
     }
     public function index()
