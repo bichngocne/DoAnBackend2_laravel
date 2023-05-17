@@ -30,7 +30,7 @@
                 {{$item->tenloaisanpham}}
             </td>
             <td style="text-align: center;">
-                <a href="" type="button" class="btn btn-info">Edit</a>
+                <a href="{{route('editscreencategories', ['id'=>$item->id])}}" type="button" class="btn btn-info">Edit</a>
                 <a onclick="return confirm('Are you sure you want delete?')" href="" type="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>

@@ -22,3 +22,7 @@ Route::get('show-categories',[CategoryProductController::class,'ListCategroies']
 Route::post('add-categories',[CategoryProductController::class,'AddCategories'])->name("addcategories");
 //addScreen Categories
 Route::get('addScreen-categories',[CategoryProductController::class,'AddScreenCategroies'])->name("addscreencategories");
+//edit Categories
+Route::post('edit-categories/{id}',[CategoryProductController::class,'EditCategories'])->name("editcategories");
+//editScreen Categories
+Route::get('editScreen-categories/{id}',[CategoryProductController::class,'EditScreenCategroies'])->name("editscreencategories");

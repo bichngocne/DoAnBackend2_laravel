@@ -13,10 +13,14 @@ class CategoryProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     
     function ListCategroies(){
         $listLsp=DB::table("loaisanpham")->paginate(5);
         return view("management_admin.showcategories",compact("listLsp"));
     }
+
+
     function AddCategories(Request $request){
         $request->validate([
             'category_name'=>'required',
@@ -25,8 +29,25 @@ class CategoryProductController extends Controller
         $check=$this->create($data);
         return redirect()->route('listcategories');
     }
+
+
     function AddScreenCategroies(){
         return view("management_admin.add_categories");
+    }
+
+
+    function EditScreenCategroies($id){
+        $lsp=LoaiSanPham::find($id);
+        return view("management_admin.edit_categories",compact('lsp'));
+    }
+
+
+    function EditCategories($id,Request $request){
+        $data=$request->all();
+        $lsp=LoaiSanPham::find($id);
+        $lsp->tenLoaiSanPham=$data['category_name'];
+        $lsp->save();
+        return redirect()->route('listcategories');
     }
     public function index()
     {
