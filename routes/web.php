@@ -16,4 +16,9 @@ use App\Http\Controllers\Admin\CategoryProductController;
 Route::get('/', function () {
     return view('welcome');
 });
+//show Categories
 Route::get('show-categories',[CategoryProductController::class,'ListCategroies'])->name("listcategories");
+//add Categories
+Route::post('add-categories',[CategoryProductController::class,'AddCategories'])->name("addcategories");
+//addScreen Categories
+Route::get('addScreen-categories',[CategoryProductController::class,'AddScreenCategroies'])->name("addscreencategories");

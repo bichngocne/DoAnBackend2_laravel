@@ -13,6 +13,6 @@ class LoaiSanPham extends Model
     public $timestamps = false;
     protected $table="loaisanpham";
     protected $fillable=[
-        'tenLoaiSanPham'
+        'tenloaisanpham'
     ];
-}
+}   

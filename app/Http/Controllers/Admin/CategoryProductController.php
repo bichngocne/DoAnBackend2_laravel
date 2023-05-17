@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\LoaiSanPham;
 class CategoryProductController extends Controller
 {
     /**
@@ -17,6 +17,17 @@ class CategoryProductController extends Controller
         $listLsp=DB::table("loaisanpham")->paginate(5);
         return view("management_admin.showcategories",compact("listLsp"));
     }
+    function AddCategories(Request $request){
+        $request->validate([
+            'category_name'=>'required',
+        ]);
+        $data=$request->all();
+        $check=$this->create($data);
+        return redirect()->route('listcategories');
+    }
+    function AddScreenCategroies(){
+        return view("management_admin.add_categories");
+    }
     public function index()
     {
         //
@@ -27,9 +38,12 @@ class CategoryProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(array $data)
     {
         //
+        return LoaiSanPham::create([
+            'tenloaisanpham'=>$data['category_name']    
+        ]);
     }
 
     /**

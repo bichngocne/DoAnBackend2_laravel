@@ -67,7 +67,7 @@
               </svg>
             </div>
             <span class="nav-link-text ms-1" >Category Product</span>
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="{{ route('addscreencategories') }}">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Add Category Product</span>
                 </a>
