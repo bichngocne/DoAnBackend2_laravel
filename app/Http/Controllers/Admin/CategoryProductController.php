@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryProductController extends Controller
 {
@@ -12,6 +13,10 @@ class CategoryProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function ListCategroies(){
+        $listLsp=DB::table("loaisanpham")->paginate(5);
+        return view("management_admin.showcategories",compact("listLsp"));
+    }
     public function index()
     {
         //
