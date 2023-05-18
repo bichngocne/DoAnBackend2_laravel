@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
 
 class CategoryProductController extends Controller
@@ -14,7 +15,8 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        //
+        $sanpham = SanPham::with('loaisanpham')->get();
+        var_dump($sanpham->all());
     }
 
     /**
