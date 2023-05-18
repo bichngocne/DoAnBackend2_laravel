@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoaiSanPham;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class UserProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $datas = SanPham::paginate(4); //tao trang
+        $productTypes = LoaiSanPham::all();
+        return view('user.product.index', compact('datas'))->with('productTypes',$productTypes);
     }
 
     /**
@@ -46,7 +51,18 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Sanpham::findOrFail($id);
+        $photos = explode(",", $product['hinhanh']);
+        $productTypes = Loaisanpham::all();
+        $user = Auth::user();
+        if(!empty($user)){
+            $userID = $user->id;
+
+        }else{
+            $userID = null;
+        }
+        return view('user.product.show', compact('product'))->with('photos', $photos)->with('productTypes',$productTypes)->with('userId', $userID);
+
     }
 
     /**

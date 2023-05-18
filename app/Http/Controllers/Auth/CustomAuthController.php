@@ -38,7 +38,7 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password'); // nhận một array có trường email, password
         if (Auth::attempt($credentials)) { //xác nhận kiểm tra để đăng nhập hệ thống
-            return redirect()->route('showProduct')->withSuccess('Signed in');
+            return redirect()->route('userproduct.show')->withSuccess('Signed in');
             // return redirect()->intended('dashboard')
         }
         return redirect("customer/login")->withSuccess('Login details are not valid');

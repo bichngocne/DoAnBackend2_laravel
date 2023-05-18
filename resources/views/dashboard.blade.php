@@ -31,14 +31,14 @@
                      <div class="container collapse navbar-collapse" id="navbarSupportedContent">
                          <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center" style="display: contents;">
                              <li class="nav-item">
-                                 <a class="nav-link active" aria-current="page" href="/product/product-list"> <i class="fa-solid fa-house-chimney"></i> Home</a>
+                                 <a class="nav-link active" aria-current="page" href="{{ route('userproduct.index') }}"> <i class="fa-solid fa-house-chimney"></i> Home</a>
                              </li>
                              <li class="btn-menu nav-item">
                                  <div class="about__box-content dropdown">
                                      <a href="" class="nav-link">Danh Mục</a>
                                      <div class="dropdown-content">
                                          @foreach($productTypes as $productType)
-                                         <a href="{{ route('categoryProduct.index',['id'=>$productType->id]) }}">{{ $productType->tenloaisanpham}}</a>
+                                         <a href="{{ route('usercategoryProduct.index',['id'=>$productType->id]) }}">{{ $productType->tenloaisanpham}}</a>
                                          @endforeach
                                      </div>
                                  </div>
@@ -52,7 +52,7 @@
                              </li>
                              @else
                              <li class="nav-item">
-                                 <a class="nav-link" href="{{ route('carts.index') }}" name="cart">
+                                 <a class="nav-link" href="{{ route('usercarts.index') }}" name="cart">
                                      <i class="fa-solid fa-cart-shopping"></i>
                                      Giỏ Hàng
                                  </a>

@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryProductController;
+use App\Http\Controllers\Admin\UserCategoryProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
-use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\UserCartController;
+use App\Http\Controllers\User\UserProductController;
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,13 +42,21 @@ Route::group(['prefix' => 'customer'], function () {
 //dashboard
 Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
 //group product type
-Route::group(['prefix' => 'category'], function(){
+Route::group(['prefix' => 'usercategory'], function(){
     //show list product by category
-    Route::resource('categoryProduct', CategoryProductController::class);
+    Route::resource('usercategoryProduct', UserCategoryProductController::class);
 
 });
 // group cart
-Route::group(['prefix' => 'cart'], function(){
-    Route::resource('carts',CartController::class);
-    Route::post('deleteProduct',[CartController::class,'destroy'])->name('carts.destroy');
+Route::group(['prefix' => 'usercart'], function(){
+    Route::resource('usercarts',UserCartController::class);
+    Route::post('deleteProduct',[UserCartController::class,'destroy'])->name('carts.destroy');
+});
+// group product
+Route::group(['prefix' => 'userproducts'], function () {
+    //show product
+    Route::resource('userproduct', UserProductController::class);
+    //show detail product
+    Route::get('/product-detail/{id}', [UserProductController::class, 'show'])->name('showProductDetail');
+    Route::post('cart/add', [UserCartController::class, 'store'])->name('cart.add');
 });

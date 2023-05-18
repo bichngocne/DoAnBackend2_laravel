@@ -1,17 +1,19 @@
 .auto-size-img-product {
     margin: 20px auto;
-    width: 200px;
+    width: 70%;
+    height: 70%;
 }
 
 .frames {
     border-radius: 25px;
     text-align: center;
     padding: 10px;
+  
 }
 .frames .col-product {
     background-color: #fff;
     border-radius: 15px;
-    padding: 10px;
+    height: 380px;
 }
 .product__item {
     text-decoration: none;
