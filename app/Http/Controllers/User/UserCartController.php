@@ -4,8 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\GioHang;
+use App\Models\LoaiSanPham;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserCartController extends Controller
 {
@@ -16,7 +18,19 @@ class UserCartController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $userID = $user->id;
+        $carts = GioHang::with('products')->where('id_user', $userID)->get()->all();
+        if (!empty($cart)) {
+            $carts = null;
+        }
+        // foreach ($carts as $cart) {
+        //     var_dump($cart->id);
+        //     var_dump($cart->products->first()->id);
+        // }
+        // die();
+        $productTypes = LoaiSanPham::all();
+        return view('user.cart.index', compact('carts'))->with('productTypes', $productTypes)->with('userId', $userID);
     }
 
     /**
@@ -48,7 +62,7 @@ class UserCartController extends Controller
         $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->first();
         // $carts = GioHang::with('products')->where('id_user', $userId)->where('id_sanpham', $productId)->first();
         if ($carts != null) {
-            $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->update(['soluong'=> $carts->soluong+1]);   
+            $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->update(['soluong' => $carts->soluong + 1]);
             return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
         } else {
             $this->create($data);
