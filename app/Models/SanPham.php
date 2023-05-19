@@ -12,11 +12,12 @@ class SanPham extends Model
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = "sanpham";
     protected $fillable = [
-        'id',
         'tensp',
         'mota',
         'soluong',
         'gia',
-        'hinhanh'
+        'hinhanh',
+        'id_loaisp',
+        'id_khuyenmai',
     ];
 }

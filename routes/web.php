@@ -33,3 +33,7 @@ Route::get('remove-categories/{id}',[CategoryProductController::class,'RemoveCat
 Route::get('seek-category',[CategoryProductController::class,'SeekCategory'])->name("seekcategory");
 //show Product
 Route::get('show-product',[ProductController::class,'ListProduct'])->name('listProduct');
+//addScreen Product
+Route::get('addScreen-product',[ProductController::class,'AddScreenProduct'])->name("addscreenproduct");
+//add Product
+Route::post('add-product',[ProductController::class,'AddProduct'])->name("addproduct");

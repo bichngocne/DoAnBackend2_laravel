@@ -24,14 +24,50 @@ class ProductController extends Controller
         ->paginate(5);       
         return view("management_admin.showproduct",compact("listSp"));
     }
+    //Man hinh them SP
+    function AddScreenProduct(){
+        $listLsp=DB::table("loaisanpham")->get();
+        $listkm=DB::table("khuyenmai")->get();
+        return view("management_admin.add_product")->with('listLsp',$listLsp)->with('listkm',$listkm);
+    }
+    //Chuc nang them SP
+    function AddProduct(Request $request){
+        $request->validate([
+            'product_name'=>'required',
+            'product_desc'=>'required',
+            'number_of_product'=>'required|integer|min:0',
+            'product_price'=>'required|integer|min:0',
+            'product_img'=>'required',        
+            'category'=>'required',
+            'promotional'=>'required',
+        ]);
+        $data=$request->all();
+        $get_img=$request->file('product_img');
+        $data['product_img']=$get_img->getClientOriginalName();
+        $get_img->move("uploads",$get_img->getClientOriginalName());
+        if($data['promotional']==-1){
+            $data['promotional']=null;
+        }
+        $check=$this->create($data);
+        return redirect()->route('listProduct');
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(array $data)
     {
         //
+        return SanPham::create([
+            'tensp'=>$data['product_name'],
+            'mota'=>$data['product_desc'],
+            'soluong'=>$data['number_of_product'],
+            'gia'=>$data['product_price'],
+            'hinhanh'=>$data['product_img'],        
+            'id_loaisp'=>$data['category'],
+            'id_khuyenmai '=>$data['promotional'],
+        ]);
     }
 
     /**

@@ -132,7 +132,7 @@
               </svg>
             </div>
             <span class="nav-link-text ms-1">Product</span>
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="{{route('addscreenproduct')}}">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Add Product</span>
                 </a>

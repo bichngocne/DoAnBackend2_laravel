@@ -91,5 +91,5 @@
         @endforeach
     </tbody>
 </table>
-
+<div>{{$listSp->links('pagination::bootstrap-4')}}</div>
 @endsection
