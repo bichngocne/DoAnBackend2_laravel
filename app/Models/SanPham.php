@@ -26,4 +26,8 @@ class SanPham extends Model
     {
         return $this->belongsTo(Loaisanpham::class, 'id_loaisp', 'id');
     }
+    public function carts()
+    {
+        return $this->belongsTo(Cart::class, 'id','id_sanpham');
+    }
 }

@@ -1,5 +1,10 @@
 @extends('dashboard')
 @section('content')
+@if ($success = Session::get('success'))
+<div class="alert alert-success text-center" role="alert">
+    {{ $success }}
+</div>
+@endif
     <div class="wrapper login-wrapper">
         <div class="form-box login">
             <h2>Đăng nhập</h2>

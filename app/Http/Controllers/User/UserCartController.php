@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\GioHang;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
 
 class UserCartController extends Controller
@@ -22,9 +24,13 @@ class UserCartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($data)
     {
-        //
+        return GioHang::create([
+            'soluong' => 1,
+            'id_user' => $data['user_id'],
+            'id_sanpham' => $data['product_id'],
+        ]);
     }
 
     /**
@@ -35,7 +41,20 @@ class UserCartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productId = $request->input('product_id');
+        $userId = $request->input('user_id');
+        //  dd($request);die();
+        $data = $request->all();
+        $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->first();
+        // $carts = GioHang::with('products')->where('id_user', $userId)->where('id_sanpham', $productId)->first();
+        if ($carts != null) {
+            $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->update(['soluong'=> $carts->soluong+1]);   
+            return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
+        } else {
+            $this->create($data);
+            return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
+        }
+        return response()->json(['message' => 'Thêm sản phẩm vào giỏ hàng thất bại'], 200);
     }
 
     /**

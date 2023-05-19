@@ -66,8 +66,9 @@
                 </div>
                 <div class="col-md-6"><a class="btn btn-danger text-white btn-mua">Mua ngay</a></div>
             </div>
+            
             <div class="notification" style="display: none;">
-                <br><b>Thêm Sản Phẩm Vào Giỏ Hàng Thành Công</b>
+ 
             </div>
         </div>
         <div class="container" style="margin-top:20px; background:#fff;">
@@ -112,7 +113,7 @@
                         window.location.href = "{{ route('showLogin')}}";
                     } else {
 
-                        var url = "{{ route('cart.add') }}";
+                        var url = "{{ route('usercarts.store') }}";
                         $.ajax({
                             url: url,
                             method: 'POST',
@@ -122,21 +123,28 @@
                             }),
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Accept': 'application/json'
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function(response) {
                                 console.log('Sản phẩm đã được thêm vào giỏ hàng');
-
+                                notification.style.display = "unset";
+                                notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Thành Công</b>";
+                                setTimeout(function() {
+                                    notification.style.display = "none";
+                                }, 1000);
                             },
                             error: function(xhr) {
                                 console.log('Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng');
+                                notification.style.display = "unset";
+                                notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Không Thành Công</b>";
+                                setTimeout(function() {
+                                    notification.style.display = "none";
+                                }, 1000);
                             }
                         });
                     }
-                    notification.style.display = "unset";
-                    setTimeout(function() {
-                        notification.style.display = "none";
-                    }, 1000);
+
                 });
             });
         </script>
