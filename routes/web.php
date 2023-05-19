@@ -45,3 +45,5 @@ Route::post('edit-product/{id}',[ProductController::class,'EditProduct'])->name(
 Route::get('remove-product/{id}',[ProductController::class,'RemoveProduct'])->name("removeproduct");
 //seek Product  
 Route::get('seek-product',[ProductController::class,'SeekProduct'])->name("seekproduct");
+//arrange Product  
+Route::get('arrange-product',[ProductController::class,'ArrangeProduct'])->name("arrangeproduct");

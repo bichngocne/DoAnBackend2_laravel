@@ -24,7 +24,7 @@
     </div>
     <br>
     <div class="searcha">
-        <form action="" method="GET">
+        <form action="{{route('arrangeproduct')}}" method="GET">
             <div class="input-group">
                 <select name="arrange" class="form-control" id="product-parent">
                     <option value="iprice">

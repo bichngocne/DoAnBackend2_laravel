@@ -101,27 +101,42 @@ class ProductController extends Controller
     function SeekProduct(Request $request)
     {
         $data = $request->all();
-        if ($data['seek'] == "") {
-            $listSp = DB::table('sanpham')->where([
-                ['id_loaisp', '=', $data['category']],
-
-            ])
+        if ($data['seek'] == ""&&$data['category'] == -1) {
+            $listSp = DB::table('sanpham')
                 ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
                 ->paginate(5);
-        } else if ($data['category'] == -1) {
+        } 
+        else if($data['seek'] != ""&&$data['category'] == -1){
             $listSp = DB::table('sanpham')->where([
                 ['tensp', 'LIKE', '%' . $data['seek'] . '%'],
-
             ])
                 ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
                 ->paginate(5);
-        } else {
+        }
+        else {
             $listSp = DB::table('sanpham')->where([
                 ['tensp', 'LIKE', '%' . $data['seek'] . '%'],
                 ['id_loaisp', '=', $data['category']],
             ])
                 ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
                 ->paginate(5);
+        }
+        
+        $listLsp = DB::table("loaisanpham")->get();
+        return view("management_admin.showproduct")->with('listLsp', $listLsp)->with('listSp', $listSp);
+    }
+    //Sap xep SP
+    function ArrangeProduct(Request $request){
+        $data=$request->get('arrange');
+        if($data=='iprice'){
+            $listSp=sanpham::orderBy('gia','ASC')
+            ->join('loaisanpham','sanpham.id_loaiSP','=','loaisanpham.id')
+            ->paginate(5); 
+        }
+        else{
+            $listSp=sanpham::orderBy('gia','DESC')
+            ->join('loaisanpham','sanpham.id_loaiSP','=','loaisanpham.id')
+            ->paginate(5); 
         }
         $listLsp = DB::table("loaisanpham")->get();
         return view("management_admin.showproduct")->with('listLsp', $listLsp)->with('listSp', $listSp);
