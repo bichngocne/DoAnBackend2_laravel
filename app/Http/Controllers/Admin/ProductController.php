@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\SanPham;
 
 class ProductController extends Controller
 {
@@ -16,7 +18,12 @@ class ProductController extends Controller
     {
         //
     }
-
+    function ListProduct(){
+        $listSp=DB::table("sanpham")
+        ->join('loaisanpham','sanpham.id_loaisp','=','loaisanpham.id')
+        ->paginate(5);       
+        return view("management_admin.showproduct",compact("listSp"));
+    }
     /**
      * Show the form for creating a new resource.
      *

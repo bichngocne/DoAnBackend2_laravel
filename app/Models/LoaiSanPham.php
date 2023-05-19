@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\SanPham;
 
 class LoaiSanPham extends Model
 {
@@ -15,4 +16,8 @@ class LoaiSanPham extends Model
     protected $fillable=[
         'tenloaisanpham'
     ];
+    public function post(){
+
+        return $this->hasMany(SanPham::class,'id_loaisp','id');
+    }
 }   

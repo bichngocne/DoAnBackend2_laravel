@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryProductController;
+use App\Http\Controllers\Admin\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,3 +31,5 @@ Route::get('editScreen-categories/{id}',[CategoryProductController::class,'EditS
 Route::get('remove-categories/{id}',[CategoryProductController::class,'RemoveCategories'])->name("removecategories");
 //seek Categories  
 Route::get('seek-category',[CategoryProductController::class,'SeekCategory'])->name("seekcategory");
+//show Product
+Route::get('show-product',[ProductController::class,'ListProduct'])->name('listProduct');
