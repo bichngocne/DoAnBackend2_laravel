@@ -2,11 +2,20 @@
 @section('admin_content')
 <h6 class="font-weight-bolder mb-0">Product</h6>
 <div class="a">
-    <div class="searcha">
-        <form action="" method="GET">
-            <div class="input-group">
+    <div class="searchab">
+        <form action="{{ route('seekproduct') }}" method="GET">
+            <div class="ab">
+                <div class="input-group">
                 <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                
                 <input type="text" class="form-control" name="seek" placeholder="Type product name here...">
+            </div>
+                <select name="category" class="form-control" style="width: 38%;" id="product-parent">
+                <option value="-1">All Categories</option>
+                    @foreach($listLsp as $item)
+                    <option value="{{ $item->id }}">{{ $item->tenloaisanpham }}</option>
+                    @endforeach
+                </select>
                 <button type="submit" class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank">Search</button>
             </div>
             @csrf
@@ -78,14 +87,14 @@
                 {{$item->tenloaisanpham}}
             </td>
             <td style="text-align: center;">
-                
+
             </td>
             <td style="text-align: center;">
                 {{$item->created_at}}
             </td>
             <td style="text-align: center;">
                 <a href="{{route('editscreenproduct', ['id'=>$item->sp_id])}}" type="button" class="btn btn-info">Edit</a>
-                <a onclick="return confirm('Are you sure you want delete?')" href="" type="button" class="btn btn-danger">Delete</a>
+                <a onclick="return confirm('Are you sure you want delete?')" href="{{route('removeproduct', ['id'=>$item->sp_id])}}" type="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         @endforeach

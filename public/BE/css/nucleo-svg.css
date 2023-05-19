@@ -136,6 +136,12 @@ Stroke effects - Nucleo outline icons
 .searcha{
   width: 30%;
 }
+.searchab{
+  width: 50%;
+}
 .a{
+  display:flex;
+}
+.ab{
   display:flex;
 }

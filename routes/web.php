@@ -41,3 +41,7 @@ Route::post('add-product',[ProductController::class,'AddProduct'])->name("addpro
 Route::get('editScreen-product/{id}',[ProductController::class,'EditScreenProduct'])->name("editscreenproduct");
 //edit Product
 Route::post('edit-product/{id}',[ProductController::class,'EditProduct'])->name("editproduct");
+//remove Product
+Route::get('remove-product/{id}',[ProductController::class,'RemoveProduct'])->name("removeproduct");
+//seek Product  
+Route::get('seek-product',[ProductController::class,'SeekProduct'])->name("seekproduct");

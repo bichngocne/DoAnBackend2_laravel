@@ -18,72 +18,113 @@ class ProductController extends Controller
     {
         //
     }
-    function ListProduct(){
-        $listSp=DB::table("sanpham")
-        ->join('loaisanpham','sanpham.id_loaisp','=','loaisanpham.id')
-        ->paginate(5);       
-        return view("management_admin.showproduct",compact("listSp"));
+    function ListProduct()
+    {
+        $listSp = DB::table("sanpham")
+            ->join('loaisanpham', 'sanpham.id_loaisp', '=', 'loaisanpham.id')
+            ->paginate(5);
+        $listLsp = DB::table("loaisanpham")->get();
+        return view("management_admin.showproduct")->with('listLsp', $listLsp)->with('listSp', $listSp);
     }
     //Man hinh them SP
-    function AddScreenProduct(){
-        $listLsp=DB::table("loaisanpham")->get();
-        $listkm=DB::table("khuyenmai")->get();
-        return view("management_admin.add_product")->with('listLsp',$listLsp)->with('listkm',$listkm);
+    function AddScreenProduct()
+    {
+        $listLsp = DB::table("loaisanpham")->get();
+        $listkm = DB::table("khuyenmai")->get();
+        return view("management_admin.add_product")->with('listLsp', $listLsp)->with('listkm', $listkm);
     }
     //Chuc nang them SP
-    function AddProduct(Request $request){
+    function AddProduct(Request $request)
+    {
         $request->validate([
-            'product_name'=>'required',
-            'product_desc'=>'required',
-            'number_of_product'=>'required|integer|min:0',
-            'product_price'=>'required|integer|min:0',
-            'product_img'=>'required',        
-            'category'=>'required',
-            'promotional'=>'required',
+            'product_name' => 'required',
+            'product_desc' => 'required',
+            'number_of_product' => 'required|integer|min:0',
+            'product_price' => 'required|integer|min:0',
+            'product_img' => 'required',
+            'category' => 'required',
+            'promotional' => 'required',
         ]);
-        $data=$request->all();
-        $get_img=$request->file('product_img');
-        $data['product_img']=$get_img->getClientOriginalName();
-        $get_img->move("uploads",$get_img->getClientOriginalName());
-        if($data['promotional']==-1){
-            $data['promotional']=null;
+        $data = $request->all();
+        $get_img = $request->file('product_img');
+        $data['product_img'] = $get_img->getClientOriginalName();
+        $get_img->move("uploads", $get_img->getClientOriginalName());
+        if ($data['promotional'] == -1) {
+            $data['promotional'] = null;
         }
-        $check=$this->create($data);
+        $check = $this->create($data);
         return redirect()->route('listProduct');
     }
     //Man hinh chinh sua SP
-    function EditScreenProduct($id){
-        $sp=DB::table('sanpham')->where('sp_id',$id)->get();
-        $listLsp=DB::table("loaisanpham")->get();
-        $listkm=DB::table("khuyenmai")->get();
-        return view("management_admin.edit_product")->with('listLsp',$listLsp)->with('listkm',$listkm)->with('sp',$sp);
+    function EditScreenProduct($id)
+    {
+        $sp = DB::table('sanpham')->where('sp_id', $id)->get();
+        $listLsp = DB::table("loaisanpham")->get();
+        $listkm = DB::table("khuyenmai")->get();
+        return view("management_admin.edit_product")->with('listLsp', $listLsp)->with('listkm', $listkm)->with('sp', $sp);
     }
     //Chuc nang chinh sua SP
-    function EditProduct($id,Request $request){
+    function EditProduct($id, Request $request)
+    {
         $request->validate([
-            'product_name'=>'required',
-            'product_desc'=>'required',
-            'number_of_product'=>'required|integer|min:0',
-            'product_price'=>'required|integer|min:0',
-            'product_img'=>'required',        
-            'category'=>'required',
-            'promotional'=>'required',
+            'product_name' => 'required',
+            'product_desc' => 'required',
+            'number_of_product' => 'required|integer|min:0',
+            'product_price' => 'required|integer|min:0',
+            'product_img' => 'required',
+            'category' => 'required',
+            'promotional' => 'required',
         ]);
-        $data=$request->all();
-        $get_img=$request->file('product_img');
-        $data['product_img']=$get_img->getClientOriginalName();
-        $get_img->move("uploads",$get_img->getClientOriginalName());
-        DB::table('sanpham')->where("sp_id",$id)->update(['tensp'=>$data['product_name']]);
-        DB::table('sanpham')->where("sp_id",$id)->update(['mota'=>$data['product_desc']]);
-        DB::table('sanpham')->where("sp_id",$id)->update(['soluong'=>$data['number_of_product']]);
-        DB::table('sanpham')->where("sp_id",$id)->update(['gia'=>$data['product_price']]);
-        DB::table('sanpham')->where("sp_id",$id)->update(['hinhanh'=>$data['product_img']]);
-        DB::table('sanpham')->where("sp_id",$id)->update(['id_loaisp'=>$data['category']]);
-        if($data['promotional']==-1){
-            $data['promotional']=null;
+        $data = $request->all();
+        $get_img = $request->file('product_img');
+        $data['product_img'] = $get_img->getClientOriginalName();
+        $get_img->move("uploads", $get_img->getClientOriginalName());
+        DB::table('sanpham')->where("sp_id", $id)->update(['tensp' => $data['product_name']]);
+        DB::table('sanpham')->where("sp_id", $id)->update(['mota' => $data['product_desc']]);
+        DB::table('sanpham')->where("sp_id", $id)->update(['soluong' => $data['number_of_product']]);
+        DB::table('sanpham')->where("sp_id", $id)->update(['gia' => $data['product_price']]);
+        DB::table('sanpham')->where("sp_id", $id)->update(['hinhanh' => $data['product_img']]);
+        DB::table('sanpham')->where("sp_id", $id)->update(['id_loaisp' => $data['category']]);
+        if ($data['promotional'] == -1) {
+            $data['promotional'] = null;
         }
-        DB::table('sanpham')->where("sp_id",$id)->update(['id_khuyenmai'=>$data['promotional']]);
-        return redirect()->route('listProduct');    
+        DB::table('sanpham')->where("sp_id", $id)->update(['id_khuyenmai' => $data['promotional']]);
+        return redirect()->route('listProduct');
+    }
+    //Remove product
+    function RemoveProduct($id)
+    {
+        DB::table('sanpham')->where("sp_id", $id)->delete();
+        return redirect()->route('listProduct');
+    }
+    //Seek product
+    function SeekProduct(Request $request)
+    {
+        $data = $request->all();
+        if ($data['seek'] == "") {
+            $listSp = DB::table('sanpham')->where([
+                ['id_loaisp', '=', $data['category']],
+
+            ])
+                ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
+                ->paginate(5);
+        } else if ($data['category'] == -1) {
+            $listSp = DB::table('sanpham')->where([
+                ['tensp', 'LIKE', '%' . $data['seek'] . '%'],
+
+            ])
+                ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
+                ->paginate(5);
+        } else {
+            $listSp = DB::table('sanpham')->where([
+                ['tensp', 'LIKE', '%' . $data['seek'] . '%'],
+                ['id_loaisp', '=', $data['category']],
+            ])
+                ->join('loaisanpham', 'sanpham.id_loaiSP', '=', 'loaisanpham.id')
+                ->paginate(5);
+        }
+        $listLsp = DB::table("loaisanpham")->get();
+        return view("management_admin.showproduct")->with('listLsp', $listLsp)->with('listSp', $listSp);
     }
     /**
      * Show the form for creating a new resource.
@@ -94,13 +135,13 @@ class ProductController extends Controller
     {
         //
         return SanPham::create([
-            'tensp'=>$data['product_name'],
-            'mota'=>$data['product_desc'],
-            'soluong'=>$data['number_of_product'],
-            'gia'=>$data['product_price'],
-            'hinhanh'=>$data['product_img'],        
-            'id_loaisp'=>$data['category'],
-            'id_khuyenmai '=>$data['promotional'],
+            'tensp' => $data['product_name'],
+            'mota' => $data['product_desc'],
+            'soluong' => $data['number_of_product'],
+            'gia' => $data['product_price'],
+            'hinhanh' => $data['product_img'],
+            'id_loaisp' => $data['category'],
+            'id_khuyenmai ' => $data['promotional'],
         ]);
     }
 
