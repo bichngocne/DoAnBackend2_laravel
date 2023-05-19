@@ -37,3 +37,7 @@ Route::get('show-product',[ProductController::class,'ListProduct'])->name('listP
 Route::get('addScreen-product',[ProductController::class,'AddScreenProduct'])->name("addscreenproduct");
 //add Product
 Route::post('add-product',[ProductController::class,'AddProduct'])->name("addproduct");
+//editScreen Product
+Route::get('editScreen-product/{id}',[ProductController::class,'EditScreenProduct'])->name("editscreenproduct");
+//edit Product
+Route::post('edit-product/{id}',[ProductController::class,'EditProduct'])->name("editproduct");

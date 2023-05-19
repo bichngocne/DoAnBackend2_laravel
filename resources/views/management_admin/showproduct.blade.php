@@ -39,11 +39,11 @@
             <th>ID</th>
             <th>Product name</th>
             <th>Decription</th>
-            <th>Count</th>
+            <th>Amount</th>
             <th>Price</th>
             <th>Image</th>
             <th>Category</th>
-            <th>Coupon</th>
+            <th>Promotional</th>
             <th>Create_at</th>
             <th>Action</th>
         </tr>
@@ -84,7 +84,7 @@
                 {{$item->created_at}}
             </td>
             <td style="text-align: center;">
-                <a href="" type="button" class="btn btn-info">Edit</a>
+                <a href="{{route('editscreenproduct', ['id'=>$item->sp_id])}}" type="button" class="btn btn-info">Edit</a>
                 <a onclick="return confirm('Are you sure you want delete?')" href="" type="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>
