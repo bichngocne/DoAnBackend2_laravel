@@ -3,7 +3,7 @@
 
 
 <hr>
-<form method="POST" action="{{ url('update-status/'. $order_by_id -> id ) }}">
+<form method="POST" action="{{ url('/update-status/'.$order_by_id -> id_donhang ) }}">
   @csrf
   <select name="status">
     <option style="background-color: #ffc107;" value="1" @if ($order_by_id->trangthai == 1) selected @endif>Pending</option>

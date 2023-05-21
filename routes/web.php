@@ -21,3 +21,6 @@ Route::get('/', function () {
 Route::get('manage-order',[OrderController::class,'index'])->name('index');
 //Hiển thị chi tiết đơn hàng theo ID
 Route::get('view-order/{orderId}',[OrderController::class,'view_order'])->name('view_order');
+//update trạng thái đơn hàng
+Route::post('update-status/{id}',[OrderController::class,'updateStatus'])->name('updateStatus');
+Route::get('cancel-order/{order_id}',[OrderController::class,'cancel_order'])->name('cancel_order');

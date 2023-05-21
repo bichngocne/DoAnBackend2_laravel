@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DonHang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+
 
 class OrderController extends Controller
 {
@@ -28,7 +31,7 @@ class OrderController extends Controller
         $all_order = DB::table('donhang')
             ->join('users', 'donhang.id_user', '=', 'users.id')
             ->select('donhang.*', 'users.hoten')
-            ->orderby('donhang.id', 'desc')->get();
+            ->orderby('donhang.id', 'desc')->paginate(10);
         $manager_order = view('admin.manage_order')->with('all_order', $all_order);
 
 
@@ -52,13 +55,28 @@ class OrderController extends Controller
             ->where('donhang.id', '=', $orderId)
             ->get();
 
+        // var_dump($order_by_id);
+        // die();
+        if ($order_by_id !== null) {
+            $manager_order_by_id = view('admin.view_order')->with('order_by_id', $order_by_id)->with('all_order', $all_order)->with('order_by_id_product', $order_by_id_product);
 
-
-        $manager_order_by_id = view('admin.view_order')->with('order_by_id', $order_by_id)->with('all_order', $all_order)->with('order_by_id_product', $order_by_id_product);
-
-        return view('admin_layout')->with('admin.view_order', $manager_order_by_id);
+            return view('admin_layout')->with('admin.view_order', $manager_order_by_id);
+        }
+        return redirect()->back();
+        
     }
-    
+    public function updateStatus(Request $request, $id)
+    {
+        $status = $request->input('status');
+        DB::table('donhang')->where('id', $id)->update(['trangthai' => $status]);
+        // Redirect back to order view page
+        return redirect()->back();
+    }
+    public function cancel_order($order_id)
+    {
+        DB::table('donhang')->where('id', $order_id)->update(['trangthai' => 4]);
+        return redirect()->back();
+    }
     /**
      * Show the form for creating a new resource.
      *
