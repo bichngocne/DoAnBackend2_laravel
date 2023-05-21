@@ -19,3 +19,5 @@ Route::get('/', function () {
 });
 //hiển thị đơn hàng
 Route::get('manage-order',[OrderController::class,'index'])->name('index');
+//Hiển thị chi tiết đơn hàng theo ID
+Route::get('view-order/{orderId}',[OrderController::class,'view_order'])->name('view_order');
