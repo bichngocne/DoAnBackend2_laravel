@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,7 +15,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        //Hiển thị danh sách đơn hang
+        $all_order = DB::table('donhang')
+            ->join('users', 'donhang.id_user', '=', 'users.id')
+            ->select('donhang.*', 'users.hoten')
+            ->orderby('donhang.id', 'desc')->paginate(10);
+        $manager_order = view('admin.manage_order')->with('all_order', $all_order);
+        return view('admin_layout')->with('admin.manager_order', $manager_order);
     }
 
     /**
