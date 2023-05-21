@@ -31,3 +31,5 @@ Route::get('list-coupon',[CouponController::class,'list_coupon'])->name('list_co
 Route::get('insert-coupon',[CouponController::class,'insert_coupon'])->name('insert_coupon');
 //Thêm khuyến mại
 Route::post('add-coupon',[CouponController::class,'insert_coupon_code'])->name('insert_coupon_code');
+//Xóa khuyến mại 
+Route::get('delete-coupon/{coupon_id}',[CouponController::class,'delete_coupon'])->name('delete_coupon');

@@ -31,5 +31,10 @@ class CouponController extends Controller
         Session::put('message','Success');
         return Redirect::to('list-coupon');
     }
-    
+    public function delete_coupon($id)
+    {
+        $coupon = KhuyenMai::find($id);
+        $coupon->delete();
+        return redirect()->back();
+    }
 }
