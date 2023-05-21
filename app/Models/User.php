@@ -26,7 +26,10 @@ class User extends Authenticatable
         'sdt',
         'diachi'
     ];
-
+    public function address()
+    {
+        return $this->hasMany(diachi::class , 'id_user');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

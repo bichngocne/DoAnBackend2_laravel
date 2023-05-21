@@ -24,11 +24,6 @@ class UserCartController extends Controller
         if (!empty($cart)) {
             $carts = null;
         }
-        // foreach ($carts as $cart) {
-        //     var_dump($cart->id);
-        //     var_dump($cart->products->first()->id);
-        // }
-        // die();
         $productTypes = LoaiSanPham::all();
         return view('user.cart.index', compact('carts'))->with('productTypes', $productTypes)->with('userId', $userID);
     }
@@ -57,12 +52,12 @@ class UserCartController extends Controller
     {
         $productId = $request->input('product_id');
         $userId = $request->input('user_id');
-        //  dd($request);die();
         $data = $request->all();
         $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->first();
         // $carts = GioHang::with('products')->where('id_user', $userId)->where('id_sanpham', $productId)->first();
         if ($carts != null) {
-            $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->update(['soluong' => $carts->soluong + 1]);
+            // $carts = GioHang::where('id_user', $userId)->where('id_sanpham', $productId)->update(['soluong' => $carts->soluong + 1]);
+            $this->update($request, $carts->id);
             return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
         } else {
             $this->create($data);
@@ -100,9 +95,19 @@ class UserCartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $product_id = $request->input('product_id');
+        $user_id = $request->input('user_id');
+
+        // Kiểm tra và cập nhật giỏ hàng
+        $cart = GioHang::where('id_user', $user_id)->where('id_sanpham', $product_id)->first();
+        $quantity = ($cart->soluong) + 1;
+        if ($cart) {
+            $cart->soluong = $quantity;
+            $cart->save();
+        }
+        return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
     }
 
     /**
@@ -111,8 +116,23 @@ class UserCartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $userId = $request->input('user_id');
+        // $productIds = explode(',', $request->input('product_ids'));
+        // dd($productIds);
+        // $data = $request->all();
+        // Thực hiện xóa các sản phẩm tương ứng
+        foreach ($request->input('product_ids') as $productId) {
+                $carts = GioHang::with('products')->where('id_user', $userId)->where('id_sanpham', $productId)->first();
+                if($carts){
+
+                    // dd($carts);
+                    GioHang::destroy($carts->id);
+                }
+        }
+        // die();
+        return redirect()->route('usercarts.index')
+            ->with('success', 'Deleted successfully');
     }
 }

@@ -24,9 +24,10 @@
         <div class="col-md-6">
 
             <div class="product-description ">
-                <h3 style="padding-top:65px;"><?php echo $product['tensp'] ?></h3>
+                <h3 style="padding-top:65px;">{{$product->tensp}}</h3>
                 <div style="padding:8px;font-size: 32px;line-height: 32px;color: #C92127;font-family: 'Roboto',sans-serif !important;">
-                    <?php echo number_format($product['gia']) ?> VND</div>
+                    {{ number_format($product->gia) }}VND
+                </div>
                 <div>
                     Chính sách đổi trả : Đổi trả sản phẩm trong 30 ngày <a href=" " style="text-decoration: auto;">Xem thêm</a>
                 </div>
@@ -56,7 +57,6 @@
             </div>
 
             <div class="button-product-buy is-flex">
-
                 <div class="col-md-6">
                     @if(!empty($userId))
                     <button class="btn btn-danger text-white add-to-cart-btn" data-product-id="{{ $product->id }}" data-user-id="{{ $userId }}" style="width:100%; height:100%; font-size: 15px;">Thêm vào giỏ hàng</button>
@@ -64,87 +64,96 @@
                     <button class="btn btn-danger text-white add-to-cart-btn" data-product-id="{{ $product->id }}" style="width:100%; height:100%; font-size: 15px;">Thêm vào giỏ hàng</button>
                     @endif
                 </div>
-                <div class="col-md-6"><a class="btn btn-danger text-white btn-mua">Mua ngay</a></div>
+                <div class="col-md-6">
+                    <form action="{{ route('useroderproducts.index', [$product->id,1]) }}" method="get">
+                        @if(empty($userId))
+                        <a href="{{ route('showLogin')}}" class="btn btn-danger text-white btn-mua">Mua ngay</a>
+                        @else
+                        <button class="btn btn-danger text-white btn-mua" data-product-id="{{ $product->id }}">Mua ngay</button>
+                        @endif
+                    </form>
+                </div>
             </div>
-            
+
             <div class="notification" style="display: none;">
- 
             </div>
         </div>
-        <div class="container" style="margin-top:20px; background:#fff;">
-            <h3 style="padding-top:20px">Mô Tả Sản Phẩm</h3>
-            <div style="padding:5px;"><?php echo $product['mota'] ?></div>
+    </div>
+    <div class="container" style="margin-top:20px; background:#fff;">
+        <h3 style="padding-top:20px">Mô Tả Sản Phẩm</h3>
+        <div style="padding:5px;">{{ $product->mota }}</div>
 
-        </div>
-        @endsection
-        <script>
-            var slideIndex = 1;
-            showDivs(slideIndex);
+    </div>
+    @endsection
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
 
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {
+                slideIndex = 1
             }
-
-            function showDivs(n) {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                if (n > x.length) {
-                    slideIndex = 1
-                }
-                if (n < 1) {
-                    slideIndex = x.length
-                }
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                x[slideIndex - 1].style.display = "block";
+            if (n < 1) {
+                slideIndex = x.length
             }
-        </script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                const btnAdd = document.querySelector('.add-to-cart-btn');
-                const notification = document.querySelector('.notification');
-                btnAdd.addEventListener('click', function() {
-                    var productId = btnAdd.getAttribute('data-product-id');
-                    var userId = btnAdd.getAttribute('data-user-id');
-                    if (userId == null) {
-                        window.location.href = "{{ route('showLogin')}}";
-                    } else {
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            const btnAdd = document.querySelector('.add-to-cart-btn');
+            const notification = document.querySelector('.notification');
+            btnAdd.addEventListener('click', function() {
+                var productId = btnAdd.getAttribute('data-product-id');
+                var userId = btnAdd.getAttribute('data-user-id');
+                if (userId == null) {
+                    window.location.href = "{{ route('showLogin')}}";
+                } else {
+                    var url = "{{ route('usercarts.store') }}";
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: JSON.stringify({
+                            product_id: productId,
+                            user_id:userId,
+                            quantity: 1
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            console.log('Sản phẩm đã được thêm vào giỏ hàng');
+                            notification.style.display = "unset";
+                            notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Thành Công</b>";
+                            setTimeout(function() {
+                                notification.style.display = "none";
+                            }, 1000);
+                        },
+                        error: function(xhr) {
+                            console.log('Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng');
+                            notification.style.display = "unset";
+                            notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Không Thành Công</b>";
+                            setTimeout(function() {
+                                notification.style.display = "none";
+                            }, 1000);
+                        }
+                    });
+                }
 
-                        var url = "{{ route('usercarts.store') }}";
-                        $.ajax({
-                            url: url,
-                            method: 'POST',
-                            data: JSON.stringify({
-                                product_id: productId,
-                                user_id: userId
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(response) {
-                                console.log('Sản phẩm đã được thêm vào giỏ hàng');
-                                notification.style.display = "unset";
-                                notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Thành Công</b>";
-                                setTimeout(function() {
-                                    notification.style.display = "none";
-                                }, 1000);
-                            },
-                            error: function(xhr) {
-                                console.log('Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng');
-                                notification.style.display = "unset";
-                                notification.innerHTML = "<br><b>Thêm Sản Phẩm Vào Giỏ Hàng Không Thành Công</b>";
-                                setTimeout(function() {
-                                    notification.style.display = "none";
-                                }, 1000);
-                            }
-                        });
-                    }
-
-                });
             });
-        </script>
+
+        });
+    </script>

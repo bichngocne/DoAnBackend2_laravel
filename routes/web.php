@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserCategoryProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\User\UserCartController;
+use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\UserProductController;
 use App\Models\User;
 
@@ -21,7 +23,7 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
 });
-//group customer
+//group customer user
 Route::group(['prefix' => 'customer'], function () {
     //login view
     Route::get('/login', [CustomAuthController::class, 'showLogin'])->name('showLogin');
@@ -37,26 +39,32 @@ Route::group(['prefix' => 'customer'], function () {
     Route::get('/forget-password', [CustomAuthController::class, 'changePasswordShow'])->name('customer.showChangePassword');
     //change password
     Route::post('/change-password', [CustomAuthController::class, 'editPassword'])->name('customer.changepassword');
-    
 });
-//dashboard
+//dashboard 
 Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
-//group product type
+//group product type user
 Route::group(['prefix' => 'usercategory'], function(){
     //show list product by category
     Route::resource('usercategoryProduct', UserCategoryProductController::class);
 
 });
-// group cart
+// group cart user
 Route::group(['prefix' => 'usercart'], function(){
     Route::resource('usercarts',UserCartController::class);
     Route::post('deleteProduct',[UserCartController::class,'destroy'])->name('carts.destroy');
 });
-// group product
+// group product user
 Route::group(['prefix' => 'userproducts'], function () {
     //show product
     Route::resource('userproduct', UserProductController::class);
     //show detail product
     Route::get('/product-detail/{id}', [UserProductController::class, 'show'])->name('showProductDetail');
     Route::post('cart/add', [UserCartController::class, 'store'])->name('cart.add');
+});
+//group order product user
+Route::group(['oder-product'=>'useroder'],function(){
+    Route::resource('userorders', UserOrderController::class);
+    Route::post('userorder/product', [UserOrderController::class,'create'])->name('userorders.create');
+    Route::get('order-product/{product_ids}/{quantity}',[UserOrderController::class,'index'])->name('useroderproducts.index');
+    // Route::post('order-product/product',[UserOrderController::class,'index'])->name('useroderproducts.index');
 });

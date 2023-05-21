@@ -53,7 +53,7 @@ class CustomAuthController extends Controller
     public function handleRegister(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users,username',
+            'username' => 'required|unique:users,username|min:10',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6',
             'passwordagain' => 'required_with:password|same:password|min:6'
