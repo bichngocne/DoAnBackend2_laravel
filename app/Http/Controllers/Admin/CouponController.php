@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\KhuyenMai;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 
 class CouponController extends Controller
@@ -27,9 +27,9 @@ class CouponController extends Controller
         $coupon = new KhuyenMai();
         $coupon -> tenkhuyenmai = $data['tenkhuyenmai'];
         $coupon -> giatri = $data['giatri'];
-
         $coupon -> save();
         Session::put('message','Success');
         return Redirect::to('list-coupon');
     }
+    
 }
