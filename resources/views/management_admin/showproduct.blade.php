@@ -61,7 +61,7 @@
         @foreach($listSp as $item)
         <tr>
             <td style="text-align: center;">
-                <p class="fw-bold mb-1">{{ $item->sp_id }}</p>
+                <p class="fw-bold mb-1">{{ $item->id }}</p>
             </td>
             <td style="text-align: center;">
                 {{$item->tensp}}
@@ -93,8 +93,8 @@
                 {{$item->created_at}}
             </td>
             <td style="text-align: center;">
-                <a href="{{route('editscreenproduct', ['id'=>$item->sp_id])}}" type="button" class="btn btn-info">Edit</a>
-                <a onclick="return confirm('Are you sure you want delete?')" href="{{route('removeproduct', ['id'=>$item->sp_id])}}" type="button" class="btn btn-danger">Delete</a>
+                <a href="{{route('editscreenproduct', ['id'=>$item->id])}}" type="button" class="btn btn-info">Edit</a>
+                <a onclick="return confirm('Are you sure you want delete?')" href="{{route('removeproduct', ['id'=>$item->id])}}" type="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         @endforeach

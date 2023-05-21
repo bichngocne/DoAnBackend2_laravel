@@ -3,7 +3,7 @@
 
 <h6 class="font-weight-bolder mb-0">Edit Product</h6>
 <hr>
-<form style="width: 1500px;" action="{{ route('editproduct',$sp[0]->sp_id) }}" method="post" enctype="multipart/form-data">
+<form style="width: 1500px;" action="{{ route('editproduct',$sp[0]->id) }}" method="post" enctype="multipart/form-data">
   @csrf
   <div class="form-group ">
   <label style="font-size:16px" class="font-weight-bolder mb-0">Product Name</label>

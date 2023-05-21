@@ -16,8 +16,5 @@ class LoaiSanPham extends Model
     protected $fillable=[
         'tenloaisanpham'
     ];
-    public function post(){
-
-        return $this->hasMany(SanPham::class,'id_loaisp','id');
-    }
+    protected $primaryKey = 'id';
 }   
