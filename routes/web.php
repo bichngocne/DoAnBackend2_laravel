@@ -27,3 +27,5 @@ Route::post('update-status/{id}',[OrderController::class,'updateStatus'])->name(
 Route::get('cancel-order/{order_id}',[OrderController::class,'cancel_order'])->name('cancel_order');
 //Hiển thị danh sách khuyến mại
 Route::get('list-coupon',[CouponController::class,'list_coupon'])->name('list_coupon');
+//Thêm khuyến mại
+Route::get('insert-coupon',[CouponController::class,'insert_coupon'])->name('insert_coupon');
