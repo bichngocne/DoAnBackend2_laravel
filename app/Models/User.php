@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table ='users';
     protected $fillable = [
         'username',
         'email',
@@ -26,9 +27,9 @@ class User extends Authenticatable
         'sdt',
         'diachi'
     ];
-    public function address()
+    public function diachi()
     {
-        return $this->hasMany(diachi::class , 'id_user');
+        return $this->hasMany(DiaChi::class , 'id_user');
     }
     /**
      * The attributes that should be hidden for serialization.

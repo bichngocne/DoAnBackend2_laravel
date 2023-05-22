@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserCategoryProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
+use App\Http\Controllers\User\UserAddressController;
 use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\UserProductController;
+use App\Http\Controllers\User\UserController;
 use App\Models\User;
 
 /*
@@ -68,3 +70,14 @@ Route::group(['oder-product'=>'useroder'],function(){
     Route::get('order-product/{product_ids}/{quantity}',[UserOrderController::class,'index'])->name('useroderproducts.index');
     // Route::post('order-product/product',[UserOrderController::class,'index'])->name('useroderproducts.index');
 });
+
+
+//group user
+Route::resource('users',UserController::class);
+Route::resource('diachi',UserAddressController::class);
+//show ra toàn bộ địa chỉ ủa user có id đã đăng nhập
+Route::get('/user/{id}/address', [UserAddressController::class, 'address'])->name('user.address');
+
+//sau khi sửa xong địa chỉ
+Route::put('/user/{id}/address',  [UserAddressController::class, 'update'])->name('diachi.update');
+  

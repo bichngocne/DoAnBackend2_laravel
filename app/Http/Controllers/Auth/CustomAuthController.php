@@ -17,8 +17,14 @@ class CustomAuthController extends Controller
     //dashboard
     public function dashboard()
     {
-        $productTypes = LoaiSanPham::all();
-        return view('dashboard', compact('productTypes'));
+        if (Auth::check()) {
+            $user = Auth::user();
+          //  dd($user); die();
+            $productTypes = LoaiSanPham::all();
+                return view('dashboard', compact('user', 'productTypes'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     //view login
