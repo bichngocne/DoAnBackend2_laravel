@@ -1,0 +1,33 @@
+.auto-size-img-product {
+    margin: 20px auto;
+    width: 200px;
+}
+
+.frames {
+    border-radius: 25px;
+    text-align: center;
+    padding: 10px;
+}
+.frames .col-product {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+}
+.product__item {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.product__name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: block;
+}
+.product__price {
+    padding: 5px;
+    font-size: 25px;
+    line-height: 32px;
+    color: #C92127;
+    font-family: 'Roboto', sans-serif !important;
+}
