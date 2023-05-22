@@ -25,6 +25,8 @@ Route::get('view-order/{orderId}',[OrderController::class,'view_order'])->name('
 //update trạng thái đơn hàng
 Route::post('update-status/{id}',[OrderController::class,'updateStatus'])->name('updateStatus');
 Route::get('cancel-order/{order_id}',[OrderController::class,'cancel_order'])->name('cancel_order');
+//in hóa đơn
+Route::get('print-order/{order_id}',[OrderController::class,'print_order'])->name('print_order');
 //Hiển thị danh sách khuyến mại
 Route::get('list-coupon',[CouponController::class,'list_coupon'])->name('list_coupon');
 //Hiển thị thêm khuyến mại

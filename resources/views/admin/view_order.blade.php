@@ -109,7 +109,8 @@
   <span class="status completed">Done</span>
   <span class="status cancelled">Cancelled</span>
 </button> --}}
+<a target="_blank" href="{{ url('print-order/'.$order_by_id->id_donhang ) }}" class="btn btn-info" type="submit">Print Bill</a>
 
-  <br>
+<br>
 
   @endsection

@@ -7,6 +7,8 @@ use App\Models\DonHang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
 
 
 class OrderController extends Controller
@@ -49,13 +51,12 @@ class OrderController extends Controller
         $order_by_id_product = DB::table('donhang')
             ->join('diachi', 'diachi.id_user', '=', 'donhang.id_user')
             ->join('users', 'donhang.id_user', '=', 'users.id')
-            ->join('donhangchitiet', 'donhang.id', '=', 'donhangchitiet.id')
+            ->join('donhangchitiet', 'donhang.id', '=', 'donhangchitiet.id_donhang')
             ->join('sanpham', 'donhangchitiet.id_sanpham', '=', 'sanpham.id')
             ->select('donhang.*', 'diachi.*', 'users.*', 'donhangchitiet.*', 'sanpham.*')
             ->where('donhang.id', '=', $orderId)
             ->get();
-
-        // var_dump($order_by_id);
+        // var_dump($order_by_id_product);
         // die();
         if ($order_by_id !== null) {
             $manager_order_by_id = view('admin.view_order')->with('order_by_id', $order_by_id)->with('all_order', $all_order)->with('order_by_id_product', $order_by_id_product);
@@ -63,7 +64,6 @@ class OrderController extends Controller
             return view('admin_layout')->with('admin.view_order', $manager_order_by_id);
         }
         return redirect()->back();
-        
     }
     public function updateStatus(Request $request, $id)
     {
@@ -77,6 +77,42 @@ class OrderController extends Controller
         DB::table('donhang')->where('id', $order_id)->update(['trangthai' => 4]);
         return redirect()->back();
     }
+    public function print_order($order_id)
+    {
+        $order = DB::table('donhang')
+            ->join('donhangchitiet', 'donhangchitiet.id_donhang', '=', 'donhang.id')
+            ->join('users', 'donhang.id_user', '=', 'users.id')
+            ->join('diachi', 'users.id', '=', 'diachi.id_user')
+            ->select('donhang.*', 'users.*', 'donhangchitiet.*', 'diachi.*')
+            ->where('donhang.id', '=', $order_id)
+            ->first();
+
+        $orderDetails = DB::table('donhang')
+        ->join('diachi', 'diachi.id_user', '=', 'donhang.id_user')
+        ->join('users', 'donhang.id_user', '=', 'users.id')
+        ->join('donhangchitiet', 'donhang.id', '=', 'donhangchitiet.id_donhang')
+        ->join('sanpham', 'donhangchitiet.id_sanpham', '=', 'sanpham.id')
+        ->select('donhang.*', 'diachi.*', 'users.*', 'donhangchitiet.*', 'sanpham.*','donhangchitiet.gia as giaCT')
+        ->where('donhang.id', '=', $order_id)
+        ->get();
+
+        $invoice = [
+            'invoice_no' => $order->id_donhang, // Thay 'order_id' bằng 'invoice_no'
+            'name' => $order->name,
+            'email' => $order->email,
+            'sdt' => $order->sdt,
+            'customer_address' => $order->cuThe,
+            'tongtien'=>$order->tongtien,
+            'items' => $orderDetails
+        ];
+        // var_dump($orderDetails);
+        // die();
+        
+        $pdf = PDF::loadView('pages.invoice', compact('invoice'));
+
+        return $pdf->stream();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
