@@ -120,9 +120,11 @@ class UserAddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(DiaChi $diachi)
     {
-        //
+        $user = Auth::user();
+        $productTypes = LoaiSanPham::all();
+        return view('diachi.edit', compact('user', 'diachi', 'productTypes'));
     }
 
     /**
