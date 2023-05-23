@@ -16,4 +16,12 @@ class DonHangChiTiet extends Model
         'soluongsp',
         'gia',
     ];
+    public function donhang()
+    {
+        return $this->belongsTo(DonHang::class, 'id_donhang');
+    }
+    public function sanpham()
+    {
+        return $this->hasOne(SanPham::class, 'id', 'id_sanpham');
+    }
 }

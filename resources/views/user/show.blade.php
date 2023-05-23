@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="item ">
-                    <a href=" " style=" text-decoration: none;color: #000; font-size:20px;"><i class="fa-regular fa-rectangle-list" style="padding-right: 20px;"></i> Đơn hàng của tôi</a>
+                    <a href=" {{route('donhang.index' )}}" style=" text-decoration: none;color: #000; font-size:20px;"><i class="fa-regular fa-rectangle-list" style="padding-right: 20px;"></i> Đơn hàng của tôi</a>
                 </div>
                 <div class="item ">
                     <a href="{{ route('user.address',$user->id)}} " style=" text-decoration: none;color: #000; font-size:20px;"><i class="fa-solid fa-location-dot" style="padding-right: 20px;"></i> Địa chỉ nhận hàng</a>

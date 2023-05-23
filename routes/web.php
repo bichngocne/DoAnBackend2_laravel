@@ -9,6 +9,7 @@ use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\UserProductController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserOderDetailController;
 use App\Models\User;
 
 /*
@@ -75,9 +76,15 @@ Route::group(['oder-product'=>'useroder'],function(){
 //group user
 Route::resource('users',UserController::class);
 Route::resource('diachi',UserAddressController::class);
+Route::resource('loaisanpham',TypeProductController::class);
+Route::resource('donhang',UserOderDetailController::class);
 //show ra toàn bộ địa chỉ ủa user có id đã đăng nhập
 Route::get('/user/{id}/address', [UserAddressController::class, 'address'])->name('user.address');
 
 //sau khi sửa xong địa chỉ
 Route::put('/user/{id}/address',  [UserAddressController::class, 'update'])->name('diachi.update');
-  
+
+// trang thái đang giao
+Route::get('/oderDetail/status_dangGiao',  [UserOderDetailController::class, 'status_dangGiao'])->name('oderDetail.status_dangGiao');
+// trang thái đã  giao
+Route::get('/oderDetail/status_daGiao',  [UserOderDetailController::class, 'status_daGiao'])->name('oderDetail.status_daGiao');

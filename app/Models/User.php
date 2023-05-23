@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\DonHang;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,11 +25,15 @@ class User extends Authenticatable
         'phanquyen',
         'hoten',
         'sdt',
-        'diachi'
+       
     ];
     public function diachi()
     {
         return $this->hasMany(DiaChi::class , 'id_user');
+    }
+    public function donhang()
+    {
+        return $this->hasMany(DonHang::class , 'id_user');
     }
     /**
      * The attributes that should be hidden for serialization.

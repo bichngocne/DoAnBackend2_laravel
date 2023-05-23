@@ -23,13 +23,16 @@ class UserOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($product_id,$quantity)
-    {
+    { if (!$product_id) {
+        abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+    }
         // dd($product_id);
         $quantity = $quantity;
         $user = Auth::user();
         $userID = $user->id;
-        $user = User::with('address')->findOrFail($userID);
-        $address = $user->address->first();
+        $user = User::with('diachi')->findOrFail($userID);
+      // dd($user) ; die();
+        $address = $user->diachi->first();
         if (!$address) {
             $address = null;
         }
@@ -165,6 +168,8 @@ class UserOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $donhang = donhang::where('id',$id)->delete();
+        // Chuyển trang
+        return redirect()->back()->with('success', 'Delete successfully');
     }
 }
