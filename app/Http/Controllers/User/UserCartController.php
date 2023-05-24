@@ -19,6 +19,9 @@ class UserCartController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if (!$user) {
+            abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+        }
         $userID = $user->id;
         $carts = GioHang::with('products')->where('id_user', $userID)->get()->all();
         if (!empty($cart)) {

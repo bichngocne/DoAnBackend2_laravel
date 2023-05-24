@@ -6,6 +6,7 @@
             @if(!empty($datas) && $datas->count())
 
             @foreach($datas as $data)
+           
             <div class="col-md-3 col-lg-3 col-12 py-5 frames">
                 <div class='col-product'>
                     <a href="{{ route('showProductDetail',['id'=> $data->id]) }}" class="product__item">
@@ -15,6 +16,7 @@
                 </div>
                 </a>
             </div>
+          
             @endforeach
             @else
             <tr>

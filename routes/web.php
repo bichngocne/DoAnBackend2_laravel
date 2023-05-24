@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\UserCategoryProductController;
+
+use App\Http\Controllers\User\UserCategoryProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\User\UserAddressController;
@@ -88,3 +88,5 @@ Route::put('/user/{id}/address',  [UserAddressController::class, 'update'])->nam
 Route::get('/oderDetail/status_dangGiao',  [UserOderDetailController::class, 'status_dangGiao'])->name('oderDetail.status_dangGiao');
 // trang thái đã  giao
 Route::get('/oderDetail/status_daGiao',  [UserOderDetailController::class, 'status_daGiao'])->name('oderDetail.status_daGiao');
+//category 
+Route::get('/usercategoryProduct/{id}', [UserCategoryProductController::class, 'index'])->name('usercategoryProduct.index');
