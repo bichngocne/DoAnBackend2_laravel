@@ -18,6 +18,10 @@ class UserController extends Controller
         if (!$id) {
             abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
         }
+        $userdn = Auth::user();
+        if (!$userdn) {
+            abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+        }
         $user = User::findOrFail($id);
         $addressLink = route('user.address', $user->id);
         $productTypes = LoaiSanPham::all();

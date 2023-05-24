@@ -50,7 +50,16 @@
 
             @foreach ($donhang as $dh)
             <!-- Hiển thị thông tin đơn hàng -->
-            <h3>Đơn hàng: {{ $dh->id }}</h3>
+            <div class="row">
+                <div class="col-md-6"> <h3>Đơn hàng: {{ $dh->id }}</h3></div>
+                <div class="col-md-6"> <p style="color: red;">Trạng thái: @if ($dh->trangthai == 2)
+                        đã giao
+                        @elseif($dh->trangthai == 1)
+                        đang giao
+                        @endif
+                    </p></div>
+            </div>
+           
             <!-- Hiển thị thông tin đơn hàng chi tiết -->
             @foreach ($dh->donhangchitiet as $dhct)
             <div class="row">
@@ -76,16 +85,11 @@
                 <div class="col-md-4">
                     <p style="color: red;">Thành tiền : {{ number_format($dh->tongtien, 0, ',', '.') }} đ</p>
 
-                    <p style="color: red;">Trạng thái: @if ($dh->trangthai == 2)
-                        đã giao
-                        @elseif($dh->trangthai == 1)
-                        đang giao
-                        @endif
-                    </p>
+                   
 
                 </div>
                 <div class="col-md-4">
-                   @if ($dh->trangthai == 2)
+                    @if ($dh->trangthai == 2)
 
                     <form action="{{route('donhang.destroy', $dh->id)}}" method="POST" onsubmit="return confirm('Ban muon xoa khong')">
                         @method('delete')

@@ -51,7 +51,11 @@
             @foreach ($donhang as $dh)
             @if ($dh->trangthai == 2)
             <!-- Hiển thị thông tin đơn hàng -->
-            <h3>Đơn hàng: {{ $dh->id }} </h3>
+            <div class="row">
+                <div class="col-md-6"> <h3>Đơn hàng: {{ $dh->id }}</h3></div>
+                <div class="col-md-6">  <p style="color: red ;">Trạng thái :  đã giao </p></div>
+            </div>
+         
             <!-- Hiển thị thông tin đơn hàng chi tiết -->
             @foreach ($dh->donhangchitiet as $dhct)
             <div class="row">
@@ -74,7 +78,7 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
                     <p style="color: red;">Thành tiền : {{ number_format($dh->tongtien, 0, ',', '.') }} đ</p>
-                    <p style="color: red ;">Trạng thái :  đã giao </p>
+                   
                 </div>
                 <div class="col-md-4">
 

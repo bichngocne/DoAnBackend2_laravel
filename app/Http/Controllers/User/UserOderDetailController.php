@@ -6,14 +6,16 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserOderDetailController extends Controller
 {
     public function index()
     {
-      $user = auth()->user();
-
       $user = auth()->user();       
+      if (!$user) {
+          abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+      }       
       $donhang = $user->donhang()->with('donhangchitiet')->get();
       $productTypes = LoaiSanPham::all(); 
      
@@ -22,9 +24,11 @@ class UserOderDetailController extends Controller
     }
     public function status_dangGiao()
     {
-      $user = auth()->user();
-
+     
       $user = auth()->user();       
+      if (!$user) {
+          abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+      }
       $donhang = $user->donhang()->with('donhangchitiet')->get();
       $productTypes = LoaiSanPham::all(); 
      
@@ -33,9 +37,10 @@ class UserOderDetailController extends Controller
     }
     public function status_daGiao()
     {
-      $user = auth()->user();
-
       $user = auth()->user();       
+      if (!$user) {
+          abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+      }  
       $donhang = $user->donhang()->with('donhangchitiet')->get();
       $productTypes = LoaiSanPham::all(); 
      
