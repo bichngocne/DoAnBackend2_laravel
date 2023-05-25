@@ -44,8 +44,13 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password'); // nhận một array có trường email, password
         if (Auth::attempt($credentials)) { //xác nhận kiểm tra để đăng nhập hệ thống
-            return redirect()->route('userproduct.index')->withSuccess('Signed in');
-            // return redirect()->intended('dashboard')
+            if (Auth::user()->phanquyen == 'customer') {
+                // Xử lý cho tài khoản khách hàng
+                return redirect()->route('userproduct.index')->withSuccess('Signed in');
+            } else {
+                // Xử lý cho tài khoản quản trị viên
+                return redirect()->route('listProduct')->withSuccess('Signed in');
+            }
         }
         return redirect("customer/login")->with("success", "Tài khoản hoặc mật khẩu sai!");
     }

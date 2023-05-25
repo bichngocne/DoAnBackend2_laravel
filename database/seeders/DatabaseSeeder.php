@@ -16,6 +16,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $password = '2222222';
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        DB::table('users')->insert([
+            'username' => 'xuannchienn',
+            'email' => 'xuannchienn@gmail.com',
+            'password' => $hashedPassword,
+            'phanquyen' => 'admin'
+        ]);
         DB::table('loaisanpham')->insert([
             'tenLoaiSanPham' => 'Iphone',
         ]);
