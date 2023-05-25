@@ -8,11 +8,11 @@
   {{ csrf_field() }}
   <div class="form-group ">
     <label style="font-size:16px" class="font-weight-bolder mb-0">Tên khuyến mại</label>
-    <input type="text" name="tenkhuyenmai" class="form-control" id="tenkhuyenmai" placeholder="">
+    <input type="text" name="tenkhuyenmai" pattern="\w+(\s+\w+)*" maxlength="50" required minlength="1" title="Nhập sai định dạng" class="form-control" id="tenkhuyenmai" placeholder="">
   </div>
   <div class="form-group">
     <label style="font-size:16px" class="font-weight-bolder mb-0">Giá trị</label>
-    <input type="text" name="giatri" class="form-control" id="tenkhuyenmai" placeholder="">
+    <input type="number" name="giatri" class="form-control" id="tenkhuyenmai" placeholder="">
   </div>
   <button type="submit" name="add_coupon" class="btn btn-primary">Add</button>
   <hr>

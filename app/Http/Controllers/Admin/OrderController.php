@@ -86,7 +86,7 @@ class OrderController extends Controller
             ->select('donhang.*', 'users.*', 'donhangchitiet.*', 'diachi.*')
             ->where('donhang.id', '=', $order_id)
             ->first();
-
+           
         $orderDetails = DB::table('donhang')
         ->join('diachi', 'diachi.id_user', '=', 'donhang.id_user')
         ->join('users', 'donhang.id_user', '=', 'users.id')
@@ -98,7 +98,7 @@ class OrderController extends Controller
 
         $invoice = [
             'invoice_no' => $order->id_donhang, // Thay 'order_id' bằng 'invoice_no'
-            'name' => $order->name,
+            'name' => $order->username,
             'email' => $order->email,
             'sdt' => $order->sdt,
             'customer_address' => $order->cuThe,
@@ -107,10 +107,13 @@ class OrderController extends Controller
         ];
         // var_dump($orderDetails);
         // die();
-        
+        if($order->id_donhang!==null)
+        {
         $pdf = PDF::loadView('pages.invoice', compact('invoice'));
 
         return $pdf->stream();
+            
+        }return redirect()->back();
     }
 
     /**

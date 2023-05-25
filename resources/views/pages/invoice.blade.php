@@ -165,7 +165,7 @@
 
     .TableData .cotSoLuong {
         text-align: center;
-        width: 10%;
+        width: 5%;
     }
 
     .TableData .cotSo {
@@ -242,7 +242,9 @@
             <tr>
                 <td class="cotSTT">{{ $loop->iteration }}</td>
                 <td class="cotTenSanPham">{{ $item->tensp }}</td>
-                <td class="cotSo">{{ $item->gia }}</td>
+                <td class="cotSo">
+                <?php echo number_format($item->gia, 0, ",", ".") ?>
+                </td>
                 <td class="cotSoLuong" align="center">{{ $item->soluong }}</td>
                 <td class="cotGia">
                     <div id="giasp" name="giasp">{{ number_format($item->giaCT, 0, ",", ".") }}</div>
@@ -251,7 +253,7 @@
             @endforeach
             <tr>
                 <td colspan="4" class="tong">Tổng cộng</td>
-                <td class="cotso"><?php echo number_format(($invoice['tongtien']), 0, ",", ".") ?></td>
+                <td class="cotso"><?php echo number_format(($invoice['tongtien']), 0, ",", ".") ?> VNĐ</td>
             </tr>
         </table>
         <br>
