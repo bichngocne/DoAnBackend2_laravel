@@ -3,18 +3,32 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-class CategoryProductController extends Controller
+use App\Models\LoaiSanPham;
+use App\Models\SanPham;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class UserCategoryProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $user = Auth::user();
+        if (!$user) {
+            abort(404);
+        }
+      
+        $datas = SanPham::where('id_loaisp', $id)->paginate(4);
+        if (!$datas) {
+            abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+        }
+        $productTypes = LoaiSanPham::all(); 
+        return view('user.categoryProduct', compact('user', 'productTypes', 'datas'));
     }
 
     /**
