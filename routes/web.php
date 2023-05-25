@@ -5,6 +5,7 @@ use App\Http\Controllers\User\UserCategoryProductController;
 use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\User\UserAddressController;
 use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserOrderController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\User\UserProductController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserOderDetailController;
 use App\Models\User;
+
 
 use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\ProductController;
