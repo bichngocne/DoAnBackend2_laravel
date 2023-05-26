@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('donhang', function (Blueprint $table) {
             $table->id();
             $table->double('tongtien');
-            $table->integer('trangthai');
             $table->integer('id_user')->nullable();
             $table->integer('trangthai')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
