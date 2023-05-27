@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 namespace App\Http\Controllers\User;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
+use App\Models\DonHang;
 use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +20,7 @@ class UserOderDetailController extends Controller
       }       
       $donhang = $user->donhang()->with('donhangchitiet')->get();
       $productTypes = LoaiSanPham::all(); 
-     
+    
   
         return view('user.oderDetail.index', compact('donhang' ,'user','productTypes'));
     }
@@ -47,5 +49,10 @@ class UserOderDetailController extends Controller
   
         return view('user.oderDetail.status_daGiao', compact('donhang' ,'user','productTypes'));
     }
-    
+    public function destroy($id)
+    {
+        $donhang = DonHang::where('id',$id)->delete();
+        // Chuyển trang
+        return redirect()->back()->with('success', 'Delete successfully');
+    }
 }

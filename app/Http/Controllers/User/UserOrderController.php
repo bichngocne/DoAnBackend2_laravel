@@ -12,8 +12,10 @@ use App\Models\LoaiSanPham;
 use App\Models\SanPham;
 use App\Models\User;
 use Faker\Core\Number;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class UserOrderController extends Controller
 {
@@ -101,15 +103,24 @@ class UserOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'hoten' => 'required|min:11',
-            'sdt' => 'required',
-            'tinh' => 'required',
-            'huyen' => 'required',
-            'xa' => 'required',
-            'diachicuthe' => 'required',
+       
+        $validator = FacadesValidator::make($request->all(), [
+            'username' => 'required|regex:/^[a-zA-Z0-9]{1,20}$/',
+            'hoten' => 'required|regex:/^.{1,50}$/',
+             'sdt' => 'required|digits:10',
+             'tinh' => 'required|regex:/^.{1,30}$/',
+             'huyen' => 'required|regex:/^.{1,30}$/',
+             'xa' => 'required|regex:/^.{1,30}$/',
+             'cuThe' => 'required|regex:/^.{1,70}$/',
         ]);
+
+        if ($validator->fails()) {
+           
+            return redirect()->back()->withErrors($validator)->withInput();
+            
+        }
         $user = Auth::user();
+
         // dd($user);die();
         $userID = $user->id;
         // Tạo đối tượng địa chỉ mới
@@ -118,10 +129,14 @@ class UserOrderController extends Controller
         $diaChi->tinh = $request->input('tinh');
         $diaChi->huyen = $request->input('huyen');
         $diaChi->xa = $request->input('xa');
-        $diaChi->cuThe = $request->input('diachicuthe');
+        $diaChi->cuThe = $request->input('cuThe');
         // Lưu địa chỉ mới vào cơ sở dữ liệu
         $diaChi->save();
         //cap nhat ho ten địa chỉ user
+      if(!$user)
+      {
+        abort(404); 
+      }
         User::where('id', $userID)->update(['hoten' =>  $request->input('hoten'), 'sdt' => $request->input('sdt')]);
         return redirect()->back()->withErrors('Vui lòng nhập dữ liệu');
     }
