@@ -23,7 +23,7 @@ class CategoryProductController extends Controller
 
     function AddCategories(Request $request){
         $request->validate([
-            'category_name'=>'required|max:200',
+            'category_name'=>'required|max:191',
         ]);
         $data=$request->all();
         $check=$this->create($data);
@@ -44,7 +44,7 @@ class CategoryProductController extends Controller
 
     function EditCategories($id,Request $request){
         $request->validate([
-            'category_name'=>'required|max:200',
+            'category_name'=>'required|max:191',
         ]);
         $data=$request->all();
         $lsp=LoaiSanPham::find($id);
