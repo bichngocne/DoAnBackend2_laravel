@@ -37,5 +37,5 @@
         @endforeach
     </tbody>
 </table>
-<div>{{$listLsp->links('pagination::bootstrap-4')}}</div>
+<div>{{$listLsp->appends(request()->all())->links('pagination::bootstrap-4')}}</div>
 @endsection

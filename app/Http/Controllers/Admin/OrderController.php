@@ -86,31 +86,36 @@ class OrderController extends Controller
             ->select('donhang.*', 'users.*', 'donhangchitiet.*', 'diachi.*')
             ->where('donhang.id', '=', $order_id)
             ->first();
-
+           
         $orderDetails = DB::table('donhang')
-        ->join('diachi', 'diachi.id_user', '=', 'donhang.id_user')
-        ->join('users', 'donhang.id_user', '=', 'users.id')
-        ->join('donhangchitiet', 'donhang.id', '=', 'donhangchitiet.id_donhang')
-        ->join('sanpham', 'donhangchitiet.id_sanpham', '=', 'sanpham.id')
-        ->select('donhang.*', 'diachi.*', 'users.*', 'donhangchitiet.*', 'sanpham.*','donhangchitiet.gia as giaCT')
-        ->where('donhang.id', '=', $order_id)
-        ->get();
-
-        $invoice = [
-            'invoice_no' => $order->id_donhang, // Thay 'order_id' bằng 'invoice_no'
-            'name' => $order->name,
-            'email' => $order->email,
-            'sdt' => $order->sdt,
-            'customer_address' => $order->cuThe,
-            'tongtien'=>$order->tongtien,
-            'items' => $orderDetails
-        ];
-        // var_dump($orderDetails);
-        // die();
+            ->join('diachi', 'diachi.id_user', '=', 'donhang.id_user')
+            ->join('users', 'donhang.id_user', '=', 'users.id')
+            ->join('donhangchitiet', 'donhang.id', '=', 'donhangchitiet.id_donhang')
+            ->join('sanpham', 'donhangchitiet.id_sanpham', '=', 'sanpham.id')
+            ->select('donhang.*', 'diachi.*', 'users.*', 'donhangchitiet.*', 'sanpham.*', 'donhangchitiet.gia as giaCT')
+            ->where('donhang.id', '=', $order_id)
+            ->get();
+            if ($order) {
+                $invoice = [
+                    'invoice_no' => $order->id_donhang, // Thay 'order_id' bằng 'invoice_no'
+                    'name' => $order->username,
+                    'email' => $order->email,
+                    'sdt' => $order->sdt,
+                    'customer_address' => $order->cuThe,
+                    'tongtien' => $order->tongtien,
+                    'items' => $orderDetails
+                ];
+                
+                $pdf = PDF::loadView('pages.invoice', compact('invoice'));
+    
+                return $pdf->stream();
+            }
+            else{
+                abort(404); 
+            }
         
-        $pdf = PDF::loadView('pages.invoice', compact('invoice'));
+      
 
-        return $pdf->stream();
     }
 
     /**

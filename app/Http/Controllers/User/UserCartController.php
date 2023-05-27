@@ -67,6 +67,10 @@ class UserCartController extends Controller
             return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
         }
         return response()->json(['message' => 'Thêm sản phẩm vào giỏ hàng thất bại'], 200);
+       
+        // if (!$productId) {
+        //     abort(404); // Chuyển hướng đến trang lỗi 404 nếu không tồn tại ID
+        // }
     }
 
     /**

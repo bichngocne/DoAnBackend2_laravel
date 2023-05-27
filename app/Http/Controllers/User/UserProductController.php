@@ -18,7 +18,7 @@ class UserProductController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $datas = SanPham::paginate(4); //tao trang
+        $datas = SanPham::paginate(12); //tao trang
         $productTypes = LoaiSanPham::all();
         return view('user.product.index', compact('datas'))->with('productTypes',$productTypes)->with('user', $user);
     }

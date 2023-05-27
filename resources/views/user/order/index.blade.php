@@ -4,6 +4,7 @@
 
 <div class="container">
     @if ($address == null)
+    
     <h1 class="text-center py-3">Vui lòng nhập thông tin</h1>
     <div class="adress-user-oder">
         <form action="{{route('userorders.store')}} " method="POST">
@@ -176,12 +177,12 @@
         const notification = document.querySelector('.alert-success');
         const address = "{{$address}}";
         const btnUpdateAddress = document.querySelector('.btn-update-address');
-        btnUpdateAddress.addEventListener('click',()=>{
+        btnUpdateAddress.addEventListener('click', () => {
             '{{$address = null}}';
         });
         console.log(address);
         // var productPrice = [];
-        if (address != "" ) {
+        if (address != "") {
             btnAdd.addEventListener('click', function() {
                 productPrice = '{!! isset($prices) ? json_encode($prices) : "" !!}';
                 var productQuantity = '{!! isset($prices) ? json_encode($quantity) : "" !!}';
@@ -196,7 +197,7 @@
                         totalBill: totalBill,
                         productQuantity: JSON.parse(productQuantity),
                         productPrice: JSON.parse(productPrice),
-                        user_id:'{{$userID}}'
+                        user_id: '{{$userID}}'
                     }),
                     headers: {
                         'Content-Type': 'application/json',
