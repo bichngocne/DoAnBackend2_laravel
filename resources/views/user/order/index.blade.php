@@ -4,7 +4,6 @@
 
 <div class="container">
     @if ($address == null)
-    
     <h1 class="text-center py-3">Vui lòng nhập thông tin</h1>
     <div class="adress-user-oder">
         <form action="{{route('userorders.store')}} " method="POST">

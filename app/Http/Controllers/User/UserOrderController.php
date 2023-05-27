@@ -103,9 +103,9 @@ class UserOrderController extends Controller
      */
     public function store(Request $request)
     {
-       
+    //    dd($request);
         $validator = FacadesValidator::make($request->all(), [
-            'username' => 'required|regex:/^[a-zA-Z0-9]{1,20}$/',
+            'username' => 'required|regex:/^[a-zA-Z0-9]{1,50}$/',
             'hoten' => 'required|regex:/^.{1,50}$/',
              'sdt' => 'required|digits:10',
              'tinh' => 'required|regex:/^.{1,30}$/',
@@ -114,11 +114,12 @@ class UserOrderController extends Controller
              'cuThe' => 'required|regex:/^.{1,70}$/',
         ]);
 
-        if ($validator->fails()) {
-           
-            return redirect()->back()->withErrors($validator)->withInput();
+        // if ($validator->fails()) {
+        
+        //     var_dump($validator);die();
+        //     return redirect()->back()->withErrors($validator)->withInput();
             
-        }
+        // }
         $user = Auth::user();
 
         // dd($user);die();
