@@ -36,11 +36,11 @@ class ProductController extends Controller
     function AddProduct(Request $request)
     {
         $request->validate([
-            'product_name' => 'required|max:200',
-            'product_desc' => 'required|max:255',
+            'product_name' => 'required|max:255',
+            'product_desc' => 'required',
             'number_of_product' => 'required|integer|min:0',
             'product_price' => 'required|integer|min:0',
-            'product_img' => 'required|mimes:jpg,png|max:2048',
+            'product_img' => 'required|mimes:jpg,png|max:191',
             'category' => 'required',
             'promotional' => 'required',
         ]);
@@ -66,11 +66,11 @@ class ProductController extends Controller
     function EditProduct($id, Request $request)
     {
         $request->validate([
-            'product_name' => 'required|max:200',
-            'product_desc' => 'required|max:255',
+            'product_name' => 'required|max:255',
+            'product_desc' => 'required',
             'number_of_product' => 'required|integer|min:0',
             'product_price' => 'required|integer|min:0',
-            'product_img' => 'required|mimes:jpg,png|max:2048',
+            'product_img' => 'required|mimes:jpg,png|max:191',
             'category' => 'required',
             'promotional' => 'required',
         ]);
