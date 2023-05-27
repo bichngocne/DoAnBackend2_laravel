@@ -100,5 +100,5 @@
         @endforeach
     </tbody>
 </table>
-<div>{{$listSp->links('pagination::bootstrap-4')}}</div>
+<div>{{$listSp->appends(request()->all())->links('pagination::bootstrap-4')}}</div>
 @endsection
