@@ -48,7 +48,7 @@
                         <input type="text" class="form-control" id="username" name="username" value="{{$user->username}}">
                     </div>
                     @error('username')
-                    <div class="alert alert-danger">{{ 'vui lòng nhập đúng dữ liệu' }}</div>
+                    <div class="alert alert-danger">{{ 'vui lòng nhập đúng dữ liệu, không quá 20 kí tự' }}</div>
                     @enderror
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -57,7 +57,7 @@
 
                     <div class="mb-3">
                         <label for="sdt" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="sdt" name="sdt" value="{{$user->sdt}}">
+                        <input type="number" class="form-control" id="sdt" name="sdt" value="{{$user->sdt}}">
                         @error('sdt')
                         <div class="alert alert-danger">{{ 'vui lòng nhập đủ 10 số ' }}</div>
                         @enderror

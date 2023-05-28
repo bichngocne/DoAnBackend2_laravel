@@ -12,12 +12,12 @@
                 <label for="hoten" class="form-label">Họ tên</label>
                 <input type="text" class="form-control" id="hoten" name="hoten">
             </div>
-            @if ($errors->has('name'))
+            @if ($errors->has('hoten'))
             <span class="text-danger">{{ $errors->first('hoten') }}</span>
             @endif
             <div class="mb-3 form-outline">
                 <label for="sdt" class="form-label">Số điện thoại</label>
-                <input type="phone" class="form-control" id="sdt" name="sdt">
+                <input type="number" class="form-control" id="sdt" name="sdt">
             </div>
             @if ($errors->has('sdt'))
             <span class="text-danger">{{ $errors->first('sdt') }}</span>

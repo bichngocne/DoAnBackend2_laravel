@@ -104,15 +104,18 @@ class UserOrderController extends Controller
     public function store(Request $request)
     {
     //    dd($request);
-        $validator = FacadesValidator::make($request->all(), [
-            'username' => 'required|regex:/^[a-zA-Z0-9]{1,50}$/',
-            'hoten' => 'required|regex:/^.{1,50}$/',
-             'sdt' => 'required|digits:10',
-             'tinh' => 'required|regex:/^.{1,30}$/',
-             'huyen' => 'required|regex:/^.{1,30}$/',
-             'xa' => 'required|regex:/^.{1,30}$/',
-             'cuThe' => 'required|regex:/^.{1,70}$/',
+       
+        $request->validate([
+            'tinh' => 'required|max:20',
+            'huyen' => 'required|max:20',
+            'xa' => 'required|max:20',
+            'cuThe' => 'required|max:20',
+            'username' => 'required|max:20',
+            'hoten' => 'required|max:20|min:5',
+            'sdt' => 'required|max:10',
+             
         ]);
+        
 
         // if ($validator->fails()) {
         
@@ -132,6 +135,9 @@ class UserOrderController extends Controller
         $diaChi->xa = $request->input('xa');
         $diaChi->cuThe = $request->input('cuThe');
         // Lưu địa chỉ mới vào cơ sở dữ liệu
+        // if($diaChi->save()==false){
+        //     return redirect()->back()->withErrors('Vui lòng nhập dữ liệu');
+        // };
         $diaChi->save();
         //cap nhat ho ten địa chỉ user
       if(!$user)

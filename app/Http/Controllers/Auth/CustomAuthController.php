@@ -64,10 +64,10 @@ class CustomAuthController extends Controller
     public function handleRegister(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users,username|min:10',
+            'username' => 'required|unique:users,username|min:10|max:20',
             'email' => 'required|unique:users,email',
-            'password' => 'required|min:6',
-            'passwordagain' => 'required_with:password|same:password|min:6'
+            'password' => 'required|min:6|max:15',
+            'passwordagain' => 'required_with:password|same:password|min:6|max:15'
         ]);
         $user = User::where('email', '=', $request->input('email'))->first();
 
@@ -106,7 +106,7 @@ class CustomAuthController extends Controller
         $request->validate([
             'email' => 'required',
             'oldpassword' => 'required',
-            'newpassword' => 'required|min:6',
+            'newpassword' => 'required|min:6|max:15',
         ]); //kiểm tra yêu cầu nhập của người dùng
         $email = $request->input('email');
         $userExists = User::where('email', $email)->exists();
