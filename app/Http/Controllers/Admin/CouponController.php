@@ -23,6 +23,10 @@ class CouponController extends Controller
     }
     public function insert_coupon_code(Request $request)
     {
+        $request->validate([
+            'tenkhuyenmai' => 'required|max:50',
+            'giatri' => 'required|max:20',
+        ]);
         $data = $request->all();
         $coupon = new KhuyenMai();
         $coupon -> tenkhuyenmai = $data['tenkhuyenmai'];
